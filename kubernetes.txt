@@ -1,0 +1,8 @@
+az login
+az account set -s <<>>
+az ad sp create-for-rbac --skip-assignment --verbose
+az group create -n <<>> -l "West Europe" --verbose
+az aks create -n <<>> -l "West Europe" --generate-ssh-keys -k 1.14.7 --node-count 2  --nodepool-name linuxpool  --service-principal <<>> --client-secret <<>> -g <<>> --verbose
+az aks install-cli
+az aks get-credentials -n <>  -g <<>> --verbose
+kubectl get pods
