@@ -6,3 +6,16 @@ az aks create -n <<>> -l "West Europe" --generate-ssh-keys -k 1.14.7 --node-coun
 az aks install-cli
 az aks get-credentials -n <>  -g <<>> --verbose
 kubectl get pods
+kubectl run firstpod --image=nginx --port=80 --restart=Never
+kubectl get pods
+kubectl describe pod firstpod
+kubectl delete pod firstpod
+kubectl run firstpod --image=nginx --port=80 --replicas=3
+kubectl delete pod firstpod-66855dfbf9-d4qz2
+kubectl get pods
+kubectl expose deployment firstpod --port=80 --target-port=80 --type=LoadBalancer
+kubectl get service --watch
+kubectl describe service firstpod
+kubectl get nodes
+kubectl describe node aks-linuxpool-18885282-vmss000000
+kubectl get pods -o wide
