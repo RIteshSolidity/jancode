@@ -1,0 +1,17 @@
+created a service principal
+created a new resource group
+created a new aks environment consisting of 2 linux nodes
+download kubectl
+downloaded credentials for kubectl
+
+created a new resource group for hosting acr
+create a new acr
+assign acrpull role to service principal on acr using display name of service principal
+
+created a new visual studio ASP.NET MVC core web application with docker support -linux
+created a new image in release mode
+tag the image based on acr server name
+login to acr using docker login
+push the image to acr using docker push
+
+create a new pod using Kubectl run or yaml file using the new image name
