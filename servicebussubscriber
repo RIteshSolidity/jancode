@@ -1,0 +1,41 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus;
+
+namespace topicSubscriber
+{
+    class Program
+    {
+        private static string connectionString = "Endpoint=sb://mclassjansb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=HPST2w0JHwJb+Xg/L76ipCuvH/NW3/5Hj2Nm7G5iM8c=";
+        private static string topicName = "ordertopic";
+        private static string subscriberName = "subscriber1";
+
+        private static SubscriptionClient client;
+        static void Main(string[] args)
+        {
+            client = new SubscriptionClient(connectionString, topicName, subscriberName);
+            MessageHandlerOptions mho = new MessageHandlerOptions(ExceptionHandler) {
+                MaxConcurrentCalls = 1,
+                AutoComplete = false
+            };
+            client.RegisterMessageHandler(HandleMessage, mho);
+            Console.ReadLine();
+            
+        }
+
+        private static async Task HandleMessage(Message arg1, CancellationToken arg2)
+        {
+            string message = System.Text.Encoding.ASCII.GetString(arg1.Body);
+            Console.WriteLine(message);
+            await client.CompleteAsync(arg1.SystemProperties.LockToken);
+            
+            
+        }
+
+        private static Task ExceptionHandler(ExceptionReceivedEventArgs arg)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
